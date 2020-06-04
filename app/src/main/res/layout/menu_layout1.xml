@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btRed"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/red_circle_form"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btBlue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btBlue"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/blue_circle_form"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btGreen"
+        app:layout_constraintStart_toEndOf="@+id/btRed"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btGreen"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/green_circle_form"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btYellow"
+        app:layout_constraintStart_toEndOf="@+id/btBlue"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btYellow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/yellow_circle_form"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btPerple"
+        app:layout_constraintStart_toEndOf="@+id/btGreen"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btPerple"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/perple_circle_form"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btBlack"
+        app:layout_constraintStart_toEndOf="@+id/btYellow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btBlack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/black_circle_form"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btPerple"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
