@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MyCanvasView extends View {
 
-    private ArrayList<Integer> array_x, array_y;    // 筆跡の座標を保存用
+    private Path path;
     private ArrayList<DrawArray> array_draw;        // DrawArray(筆跡、色、太さ等を保存するクラス)のArrayList
     private int x1, y1, x2, y2;                     // 始点・終点座標
     private int color, bold, mode, currentIndex;    // 色、太さ、描画モード、array_drawから表示する最後のインデックス
@@ -105,10 +106,8 @@ public class MyCanvasView extends View {
             case MotionEvent.ACTION_DOWN:       // 指が触れたら
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (mode == 1) {                    // フリーハンドモードなら
-                    array_x = new ArrayList<>();    // 筆跡を記録するArrayList
-                    array_y = new ArrayList<>();
-                    array_x.add(x);                 // 座標を追加
-                    array_y.add(y);
+                    path = new Path();
+                    path.moveTo(x, y);
                 } else if (mode > 1) {      // 楕円、四角形モードなら
                     x1 = x;     // 始点を取得
                     y1 = y;
@@ -126,8 +125,7 @@ public class MyCanvasView extends View {
                 break;
             case MotionEvent.ACTION_MOVE:       // 指が動いたら
                 if (mode == 1) {        // フリーハンドモードなら
-                    array_x.add(x);     // 座標を追加
-                    array_y.add(y);
+                    path.lineTo(x, y);
                 } else if (mode > 1) {  // 楕円・四角形モードなら
                     x2 = x;     // 終点を取得
                     y2 = y;
@@ -137,9 +135,8 @@ public class MyCanvasView extends View {
             case MotionEvent.ACTION_UP:         // 指が離れたら
             case MotionEvent.ACTION_POINTER_UP:
                 if (mode == 1) {
-                    array_x.add(x);
-                    array_y.add(y);
-                    array_draw.add(new DrawArray(array_x, array_y, color, bold));   // DrawArrayのインスタンスを作成し、ArrayListに追加
+                    path.lineTo(x, y);
+                    array_draw.add(new DrawArray(path, color, bold));
                 } else if (mode > 1) {
                     x2 = x;
                     y2 = y;
@@ -177,13 +174,7 @@ public class MyCanvasView extends View {
             paint.setColor(color);      // ペンの色を設定
             paint.setStrokeWidth(bold); // ペンの太さを設定
             if (mode == 1) {            // フリーハンドモード
-                for (int i=1; i<array_x.size(); i++) {  // 筆跡をたどって描画
-                    int x1 = array_x.get(i-1);
-                    int y1 = array_y.get(i-1);
-                    int x2 = array_x.get(i);
-                    int y2 = array_y.get(i);
-                    canvas.drawLine(x1, y1, x2, y2, paint);
-                }
+                canvas.drawPath(path, paint);
             } else if (mode == 2) {     // 楕円モード
                 canvas.drawOval(x1, y1, x2, y2, paint);
             } else if (mode == 3) {     // 四角形モード
